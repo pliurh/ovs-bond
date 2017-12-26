@@ -5,9 +5,26 @@ resource_registry:
   OS::TripleO::Controller::Net::SoftwareConfig: nic-configs/controller.yaml
   OS::TripleO::ObjectStorage::Net::SoftwareConfig: nic-configs/swift-storage.yaml
   OS::TripleO::CephStorage::Net::SoftwareConfig: nic-configs/ceph-storage.yaml
+  OS::TripleO::NodeUserData: first-boot.yaml
+  OS::TripleO::NodeExtraConfigPost: post-install.yaml
 
 parameter_defaults:
   ControlPlaneSubnetCidr: '24'
   ControlPlaneDefaultRoute: 192.168.24.1
   EC2MetadataIp: 192.168.24.1
   DnsServers: ["192.168.23.1", "8.8.4.4"]
+  NeutronTunnelTypes: 'vxlan'
+  NeutronNetworkType: 'vxlan'
+  NeutronDpdkCoreList: "2,4"
+  NeutronDpdkMemoryChannels: "4"
+  NeutronDpdkSocketMemory: "2048,2048"
+  NeutronDpdkDriverType: "vfio-pci"
+  NeutronDatapathType: "netdev"
+  NeutronVhostuserSocketDir: "/var/lib/vhost_sockets"
+  NovaReservedHostMemory: 2048
+  NovaVcpuPinSet: "6-19"
+  NovaSchedulerDefaultFilters: "RamFilter,ComputeFilter,AvailabilityZoneFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,PciPassthroughFilter,NUMATopologyFilter"
+  ComputeKernelArgs: "default_hugepagesz=1GB hugepagesz=1G hugepages=32 iommu=pt intel_iommu=on"
+  HostIsolatedCoreList: "2-19"
+  HostCpusList: HostCpusList: "3,5"
+
