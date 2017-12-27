@@ -15,16 +15,15 @@ parameter_defaults:
   DnsServers: ["192.168.23.1", "8.8.4.4"]
   NeutronTunnelTypes: 'vxlan'
   NeutronNetworkType: 'vxlan'
-  NeutronDpdkCoreList: "'2,4'"
+  NeutronDpdkCoreList: "'1,11'"
   NeutronDpdkMemoryChannels: "4"
   NeutronDpdkSocketMemory: "2048,2048"
   NeutronDpdkDriverType: "vfio-pci"
   NeutronDatapathType: "netdev"
   NeutronVhostuserSocketDir: "/var/lib/vhost_sockets"
   NovaReservedHostMemory: 2048
-  NovaVcpuPinSet: "6-19"
+  NovaVcpuPinSet: "3-9,13-19"
   NovaSchedulerDefaultFilters: "RamFilter,ComputeFilter,AvailabilityZoneFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,PciPassthroughFilter,NUMATopologyFilter"
   ComputeKernelArgs: "default_hugepagesz=1GB hugepagesz=1G hugepages=32 iommu=pt intel_iommu=on"
-  HostIsolatedCoreList: "2-19"
-  HostCpusList: HostCpusList: "'3,5'"
-
+  HostIsolatedCoreList: "2-9,12-19"
+  HostCpusList: "'2,12'"
