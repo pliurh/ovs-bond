@@ -1,4 +1,25 @@
-ExtraConfig:
+heat_template_version: 2014-10-16
+
+description: >
+  Example extra config for post-deployment
+
+parameters:
+  servers:
+    type: json
+  ComputeHostnameFormat:
+    type: string
+    default: ""
+
+resources:
+  ExtraDeployments:
+    type: OS::Heat::StructuredDeployments
+    properties:
+      servers:  {get_param: servers}
+      config: {get_resource: ExtraConfig}
+      # Do this on CREATE/UPDATE (which is actually the default)
+      actions: ['CREATE', 'UPDATE']
+
+  ExtraConfig:
     type: OS::Heat::SoftwareConfig
     properties:
       group: script
