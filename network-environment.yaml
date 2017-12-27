@@ -13,17 +13,48 @@ parameter_defaults:
   ControlPlaneDefaultRoute: 192.168.24.1
   EC2MetadataIp: 192.168.24.1
   DnsServers: ["192.168.23.1", "8.8.4.4"]
+
+  ControllerHostnameFormat: 'controller-%index%'
+  ComputeHostnameFormat: 'compute-%index%'
+  CephStorageHostnameFormat: 'ceph-%index%'
+  ObjectStorageHostnameFormat: 'swift-%index%'
+  ########################
+  # OVS DPDK configuration
+  ########################
+  ## NeutronDpdkCoreList and NeutronDpdkMemoryChannels are REQUIRED settings.
+  ## Attempting to deploy DPDK without appropriate values will cause deployment to fail or lead to unstable deployments.
+  # List of cores to be used for DPDK Poll Mode Driver
+  NeutronDpdkCoreList: "1,11"
+  # Number of memory channels to be used for DPDK
+  NeutronDpdkMemoryChannels: "4"
+  # NeutronDpdkSocketMemory
+  NeutronDpdkSocketMemory: "2048,2048"
+  # NeutronDpdkDriverType
+  NeutronDpdkDriverType: "vfio-pci"
+  # Datapath type for ovs bridges
+  NeutronDatapathType: "netdev"
+  # The vhost-user socket directory for OVS
+  NeutronVhostuserSocketDir: "/var/lib/vhost_sockets"
+
   NeutronTunnelTypes: 'vxlan'
   NeutronNetworkType: 'vxlan'
-  NeutronDpdkCoreList: "'1,11'"
-  NeutronDpdkMemoryChannels: "4"
-  NeutronDpdkSocketMemory: "2048,2048"
-  NeutronDpdkDriverType: "vfio-pci"
-  NeutronDatapathType: "netdev"
-  NeutronVhostuserSocketDir: "/var/lib/vhost_sockets"
+
+  ########################
+  # Additional settings
+  ########################
+  # Reserved RAM for host processes
   NovaReservedHostMemory: 2048
+  # A list or range of physical CPU cores to reserve for virtual machine processes.
+  # Example: NovaVcpuPinSet: ['4-12','^8'] will reserve cores from 4-12 excluding 8
   NovaVcpuPinSet: "3-9,13-19"
+  # An array of filters used by Nova to filter a node.These filters will be applied in the order they are listed,
+  # so place your most restrictive filters first to make the filtering process more efficient.
   NovaSchedulerDefaultFilters: "RamFilter,ComputeFilter,AvailabilityZoneFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,PciPassthroughFilter,NUMATopologyFilter"
+  # Kernel arguments for Compute node
   ComputeKernelArgs: "default_hugepagesz=1GB hugepagesz=1G hugepages=32 iommu=pt intel_iommu=on"
+  # A list or range of physical CPU cores to be tuned.
+  # The given args will be appended to the tuned cpu-partitioning profile.
   HostIsolatedCoreList: "2-9,12-19"
-  HostCpusList: "'2,12'"
+  # List of logical cores to be used by ovs-dpdk processess (dpdk-lcore-mask)
+  HostCpusList: "2,12"
+

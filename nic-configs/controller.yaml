@@ -85,7 +85,7 @@ resources:
           params:
             $network_config:
               network_config:
-              - type: ovs_user_bridge
+              - type: ovs_bridge
                 name: br-ctl
                 dns_servers: {get_param: DnsServers}
                 use_dhcp: true
